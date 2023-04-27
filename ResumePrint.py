@@ -1,4 +1,6 @@
-MAXLENGTH = 280
+import traceback
+
+MAXLENGTH = 512
 print("PRINT RESUMER")
 IMAGE_WIDTH:int=int(input("Image width \n\
 1)  350\n\
@@ -59,25 +61,31 @@ def process_line(string,image_width:int,start_at_line:int,actually_processed_pix
 
 
 
+try: 
+
+  with open("image_data.txt", "r") as f:
+    try:
+        i = -1
+        actually_processed_pixels:int = 0
+        lines=[]
+        for line in f:
+          i=i+1
+          actually_processed_pixels,remaining_color, char_pos, done = process_line(line.rstrip(),IMAGE_WIDTH,start_at_line,actually_processed_pixels)
+          lines.append(line.rstrip())
+          if done:
+            break
+    except EOFError:
+        pass
 
 
-with open("image_data.txt", "r") as f:
-  try:
-      i = -1
-      actually_processed_pixels:int = 0
-      lines=[]
-      for line in f:
-        i=i+1
-        actually_processed_pixels,remaining_color, char_pos, done = process_line(line.rstrip(),IMAGE_WIDTH,start_at_line,actually_processed_pixels)
-        lines.append(line.rstrip())
-        if done:
-          break
-  except EOFError:
-      pass
+  print("\n\nLINE:", i, "\nCHAR:", char_pos, "\nREM COLOR:", remaining_color)
 
-print("\n\nLINE:", i, "\nCHAR:", char_pos, "\nREM COLOR:", remaining_color)
+  input("\n\nPress ENTER")
 
-input("\n\nPress ENTER")
-
-
+except FileNotFoundError:
+  print("ERROR: Unable to open image_data.txt")
+  input("\nPress ENTER to continue") 
+except Exception:
+  traceback.print_exc()
+  input("\n\nPress ENTER to continue")
 
