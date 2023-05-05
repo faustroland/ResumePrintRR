@@ -1,4 +1,5 @@
 import traceback
+import codecs
 
 MAXLENGTH = 512
 print("PRINT RESUMER")
@@ -61,9 +62,10 @@ def process_line(string,image_width:int,start_at_line:int,actually_processed_pix
 
 
 
-try: 
+try:
 
-  with open("image_data.txt", "r") as f:
+
+  with codecs.open("image_data.txt", "r", "utf-8") as f:
     try:
         i = -1
         actually_processed_pixels:int = 0
@@ -76,6 +78,34 @@ try:
             break
     except EOFError:
         pass
+    except UnicodeDecodeError:
+        with open("image_data.txt", "r") as f:
+          try:
+              i = -1
+              actually_processed_pixels:int = 0
+              lines=[]
+              for line in f:
+                i=i+1
+                actually_processed_pixels,remaining_color, char_pos, done = process_line(line.rstrip(),IMAGE_WIDTH,start_at_line,actually_processed_pixels)
+                lines.append(line.rstrip())
+                if done:
+                  break
+          except EOFError:
+              pass
+
+##  with open("image_data.txt", "r") as f:
+##    try:
+##        i = -1
+##        actually_processed_pixels:int = 0
+##        lines=[]
+##        for line in f:
+##          i=i+1
+##          actually_processed_pixels,remaining_color, char_pos, done = process_line(line.rstrip(),IMAGE_WIDTH,start_at_line,actually_processed_pixels)
+##          lines.append(line.rstrip())
+##          if done:
+##            break
+##    except EOFError:
+##        pass
 
 
   print("\n\nLINE:", i, "\nCHAR:", char_pos, "\nREM COLOR:", remaining_color)

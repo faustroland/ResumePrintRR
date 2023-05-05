@@ -104,7 +104,7 @@ image_width = IMAGE_WIDTH
 offset_lines=OFFSET
 
 try:
-  with open("image_data.txt", "r") as f:
+  with open("image_data.txt", "r", encoding="utf-8") as f:
     all_lines = ""
     try:
         for line in f:
@@ -116,7 +116,7 @@ try:
   actually_processed_pixels,remaining_color, char_pos, done, UP_string, DOWN_string = process_line(all_lines,image_width,offset_lines,actually_processed_pixels)
 
 
-  with open('image_data_UP.txt', 'w') as f:
+  with open('image_data_UP.txt', 'w', encoding="utf-8") as f:
       for i in range(len(UP_string)):
         if i<(len(UP_string)-1):
           newline=UP_string[i]
@@ -126,7 +126,7 @@ try:
           f.write(f"{newline}")
 
 
-  with open('image_data_DOWN.txt', 'w') as f:
+  with open('image_data_DOWN.txt', 'w', encoding="utf-8") as f:
       for i in range(len(DOWN_string)):
         if i<(len(DOWN_string)-1):
           newline=DOWN_string[i]

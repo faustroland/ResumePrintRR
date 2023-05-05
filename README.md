@@ -1,5 +1,6 @@
 # ResumePrintRR
 Companion script for RecRoom chip that allows resume interupted printing on McRen's printer
+Copy it into the same folder where you have the image_data.txt
 
 When you append this circuits board between the List Create Data and the Shirt Printer it allows you to continue with the print at specified line.
 You need to enter some information where in the List Create Data the desired line is, which is calculated by python script (link in the description).
